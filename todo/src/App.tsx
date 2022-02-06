@@ -9,13 +9,15 @@ let tasks = [
     {id: 4, title: "Redux", isDone: false}
 ]
 
+function removeTask(id:number) {
+    let resultTask = tasks.filter( t => t.id !== id)
+}
 
 
 function App() {
   return (
     <div className="App">
-        <Todolist title = "Wat to learn" tasks={tasks}/>
-        <Todolist title = "it-incubator" tasks={tasks}/>
+        <Todolist title = "Wat to learn" tasks={tasks} removeTask={removeTask}/>
     </div>
   );
 }
