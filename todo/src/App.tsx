@@ -6,8 +6,6 @@ import {Todolist} from "./Todolist";
 
 function App() {
 
-
-
     let [tasks, setTasks] = useState([
         {id: 1, title: "CSS", isDone: true},
         {id: 2, title: "JS", isDone: true},
