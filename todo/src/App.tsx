@@ -21,23 +21,38 @@ function App() {
 
     let [filter, setFilter] = useState<FilterValuesType>("all");
 
-    function changeFilter(value:FilterValuesType) {
+    function changeFilter(value: FilterValuesType) {
         setFilter(value);
     }
 
     let taskForTodolist = tasks;
     if (filter === "completed") {
-        taskForTodolist = tasks.filter((t) => {return t.isDone === true})
+        taskForTodolist = tasks.filter((t) => {
+            return t.isDone === true
+        })
     }
     if (filter === "active") {
-        taskForTodolist = tasks.filter((t) => {return t.isDone === false})
+        taskForTodolist = tasks.filter((t) => {
+            return t.isDone === false
+        })
     }
 
-    function addTasks(newTaskTitle:string) {
-        let newTask = {id: v1(), title: newTaskTitle, isDone: false}
-        let newTasks = [newTask, ...tasks]
-        setTasks(newTasks)
+    function addTasks(newTaskTitle: string) {
+        if (newTaskTitle.trim() !== "") {
+            let newTask = {id: v1(), title: newTaskTitle.trim(), isDone: false}
+            let newTasks = [newTask, ...tasks]
+            setTasks(newTasks)
+        }
+    }
 
+    function changeStatus(taskId: string, isDone: boolean) {
+        let task = tasks.find((t) => {
+            return t.id === taskId
+        })
+        if (task) {
+            task.isDone = isDone
+        }
+        setTasks([...tasks])
     }
 
     return (
@@ -47,7 +62,8 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTasks={addTasks}
-                        />
+                      changeStatus={changeStatus}
+            />
         </div>
     );
 }
