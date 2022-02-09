@@ -38,11 +38,9 @@ function App() {
     }
 
     function addTasks(newTaskTitle: string) {
-        if (newTaskTitle.trim() !== "") {
-            let newTask = {id: v1(), title: newTaskTitle.trim(), isDone: false}
+            let newTask = {id: v1(), title: newTaskTitle, isDone: false}
             let newTasks = [newTask, ...tasks]
             setTasks(newTasks)
-        }
     }
 
     function changeStatus(taskId: string, isDone: boolean) {
