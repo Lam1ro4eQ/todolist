@@ -5,6 +5,8 @@ import {v1} from "uuid";
 
 export type FilterValuesType = "all" | "completed" | "active";
 
+export type TodoListType = 
+
 function App() {
 
     let [tasks, setTasks] = useState<Array<TaskType>>([
