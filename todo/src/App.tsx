@@ -11,6 +11,10 @@ export type TodoListType = {
     title: string
 }
 
+export type TaskStateType = {
+    [key: string]: Array<TaskType>
+}
+
 function App() {
 
     const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
@@ -19,19 +23,32 @@ function App() {
         {id: v1(), title: "Wat to read", filter: "all"}
     ])
 
-    const [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: v1(), title: "CSS", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "React", isDone: false},
-        {id: v1(), title: "Redux", isDone: false}
-    ]);
+
+    const [tasks, setTasks] = useState<TaskStateType>({
+        [todoLists[0].id]: [
+            {id: v1(), title: "CSS", isDone: true},
+            {id: v1(), title: "JS", isDone: true},
+            {id: v1(), title: "React", isDone: false},
+            {id: v1(), title: "Redux", isDone: false},
+        ],[todoLists[1].id]: [
+            {id: v1(), title: "CSS", isDone: true},
+            {id: v1(), title: "JS", isDone: true},
+            {id: v1(), title: "React", isDone: false},
+            {id: v1(), title: "Redux", isDone: false},
+        ],[todoLists[2].id]: [
+            {id: v1(), title: "CSS", isDone: true},
+            {id: v1(), title: "JS", isDone: true},
+            {id: v1(), title: "React", isDone: false},
+            {id: v1(), title: "Redux", isDone: false},
+        ]
+    });
 
     function removeTask(id: string) {
         let filteredTasks = tasks.filter(t => t.id !== id);
         setTasks(filteredTasks);
     }
 
-    let [filter, setFilter] = useState<FilterValuesType>("all");
+   // let [filter, setFilter] = useState<FilterValuesType>("all");
 
     function changeFilter(value: FilterValuesType) {
         setFilter(value);
@@ -50,9 +67,9 @@ function App() {
     }
 
     function addTasks(newTaskTitle: string) {
-            let newTask = {id: v1(), title: newTaskTitle, isDone: false}
-            let newTasks = [newTask, ...tasks]
-            setTasks(newTasks)
+        let newTask = {id: v1(), title: newTaskTitle, isDone: false}
+        let newTasks = [newTask, ...tasks]
+        setTasks(newTasks)
     }
 
     function changeStatus(taskId: string, isDone: boolean) {
