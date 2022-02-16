@@ -46,14 +46,17 @@ function App() {
         ]
     });
 
-    function removeTask(id: string) {
-        let filteredTasks = tasks.filter(t => t.id !== id);
-        setTasks(filteredTasks);
+    function removeTask(id: string, todoListId: string) {
+        const taskFromTodoList = tasks[todoListId];
+        const filteredTask = taskFromTodoList.filter(t => t.id !== id);
+        const copyTasks = {...tasks};
+        copyTasks[todoListId] = filteredTask;
+        setTasks(copyTasks);
     }
 
     // let [filter, setFilter] = useState<FilterValuesType>("all");
 
-    function changeFilter(value: FilterValuesType) {
+    function changeFilter(value: FilterValuesType, todoListId: string) {
         setFilter(value);
     }
 
@@ -69,13 +72,13 @@ function App() {
         })
     }
 
-    function addTasks(newTaskTitle: string) {
+    function addTasks(newTaskTitle: string, todoListId: string) {
         let newTask = {id: v1(), title: newTaskTitle, isDone: false}
         let newTasks = [newTask, ...tasks]
         setTasks(newTasks)
     }
 
-    function changeStatus(taskId: string, isDone: boolean) {
+    function changeStatus(taskId: string, isDone: boolean, todoListId: string) {
         let task = tasks.find((t) => {
             return t.id === taskId
         })
