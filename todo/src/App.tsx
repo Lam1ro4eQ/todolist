@@ -12,34 +12,37 @@ export type TodoListType = {
 }
 
 export type TaskStateType = {
-    [key: string]: Array<TaskType>
+    [todoListId: string]: Array<TaskType>    // любое кол-во неопределнных строковых ключей
 }
 
 function App() {
 
+    const todoListId_1 = v1();
+    const todoListId_2 = v1();
+    const todoListId_3 = v1();
+
     const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
-        {id: v1(), title: "Wat to learn", filter: "all"},
-        {id: v1(), title: "Wat to buy", filter: "all"},
-        {id: v1(), title: "Wat to read", filter: "all"}
+        {id: todoListId_1, title: "Wat to learn", filter: "all"},
+        {id: todoListId_2, title: "Wat to buy", filter: "all"},
+        {id: todoListId_3, title: "Wat to read", filter: "all"}
     ])
 
-
     const [tasks, setTasks] = useState<TaskStateType>({
-        [todoLists[0].id]: [
+        [todoListId_1]: [
             {id: v1(), title: "CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "React", isDone: false},
+            {id: v1(), title: "React", isDone: true},
             {id: v1(), title: "Redux", isDone: false},
-        ],[todoLists[1].id]: [
-            {id: v1(), title: "CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "React", isDone: false},
-            {id: v1(), title: "Redux", isDone: false},
-        ],[todoLists[2].id]: [
-            {id: v1(), title: "CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "React", isDone: false},
-            {id: v1(), title: "Redux", isDone: false},
+        ], [todoListId_2]: [
+            {id: v1(), title: "Milk", isDone: true},
+            {id: v1(), title: "Meat", isDone: false},
+            {id: v1(), title: "Cola", isDone: false},
+            {id: v1(), title: "Donat", isDone: false},
+        ], [todoListId_3]: [
+            {id: v1(), title: "OOP", isDone: true},
+            {id: v1(), title: "TSD", isDone: true},
+            {id: v1(), title: "OLO", isDone: false},
+            {id: v1(), title: "Hello", isDone: false},
         ]
     });
 
@@ -48,7 +51,7 @@ function App() {
         setTasks(filteredTasks);
     }
 
-   // let [filter, setFilter] = useState<FilterValuesType>("all");
+    // let [filter, setFilter] = useState<FilterValuesType>("all");
 
     function changeFilter(value: FilterValuesType) {
         setFilter(value);
