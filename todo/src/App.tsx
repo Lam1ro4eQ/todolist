@@ -47,14 +47,40 @@ function App() {
     });
 
     function removeTask(id: string, todoListId: string) {
-        const taskFromTodoList = tasks[todoListId];
-        const filteredTask = taskFromTodoList.filter(t => t.id !== id);
-        const copyTasks = {...tasks};
-        copyTasks[todoListId] = filteredTask;
-        setTasks(copyTasks);
+        // const taskFromTodoList = tasks[todoListId];
+        // const filteredTask = taskFromTodoList.filter(t => t.id !== id);
+        // const copyTasks = {...tasks};
+        // copyTasks[todoListId] = filteredTask;
+        // setTasks(copyTasks);
+        setTasks({...tasks, [todoListId]:tasks[todoListId].filter(t => t.id !== id)})
     }
 
     // let [filter, setFilter] = useState<FilterValuesType>("all");
+
+    function addTasks(newTaskTitle: string, todoListId: string) {
+        const newTask = {id: v1(), title: newTaskTitle, isDone: false}
+        const taskFromTodoList = tasks[todoListId]
+        const updatedTask = [newTask, ...taskFromTodoList]
+        const copyTasks = {...tasks};
+        copyTasks[todoListId] = updatedTask
+        setTasks(copyTasks)
+
+
+        setTasks({...tasks, [todoListId]:tasks[todoListId]})
+    }
+
+    function changeStatus(taskId: string, isDone: boolean, todoListId: string) {
+        let task = tasks[todoListId].find((t) => {
+            return t.id === taskId
+        })
+
+        if (task) {
+            task.isDone = isDone
+            setTasks({...tasks, [todoListId]: [...tasks[todoListId].task] })
+        }
+       // setTasks({...tasks, [todoListId]: tasks[todoListId].map((t)=>t.id === taskId ? {...t, isDone}:t)}) если мапить
+    }
+
 
     function changeFilter(value: FilterValuesType, todoListId: string) {
         setFilter(value);
@@ -72,21 +98,9 @@ function App() {
         })
     }
 
-    function addTasks(newTaskTitle: string, todoListId: string) {
-        let newTask = {id: v1(), title: newTaskTitle, isDone: false}
-        let newTasks = [newTask, ...tasks]
-        setTasks(newTasks)
-    }
 
-    function changeStatus(taskId: string, isDone: boolean, todoListId: string) {
-        let task = tasks.find((t) => {
-            return t.id === taskId
-        })
-        if (task) {
-            task.isDone = isDone
-        }
-        setTasks([...tasks])
-    }
+
+
 
     return (
         <div className="App">
