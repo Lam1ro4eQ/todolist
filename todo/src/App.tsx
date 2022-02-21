@@ -84,28 +84,36 @@ function App() {
         setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, filter: value} : tl));
     }
 
-
-    let taskForTodolist = tasks;
-    if (filter === "completed") {
-        taskForTodolist = tasks.filter((t) => {
-            return t.isDone === true
-        })
+    const getTaskForRender = (todoLists: TodoListType) => {
+        let taskForTodolist = tasks;
+        if (todoLists.filter === "completed") {
+                return tasks[todoLists.id].filter((td) => td.isDone === true)
+        }
+        if (todoLists.filter === "active") {
+            return tasks[todoLists.id].filter((t) => {
+                return t.isDone === false
+            })
+        }
+        if (todoLists.filter === "all") {
+            return tasks[todoLists.id].filter((t) => {
+                return t.isDone
+            })
+        }
     }
-    if (filter === "active") {
-        taskForTodolist = tasks.filter((t) => {
-            return t.isDone === false
-        })
-    }
 
 
-    const todoListsRender = todoLists.map((ls) => {
-        return (<Todolist title="Wat to learn"
-                          tasks={taskForTodolist}
-                          removeTask={removeTask}
-                          changeFilter={changeFilter}
-                          addTasks={addTasks}
-                          changeStatus={changeStatus}
-                          filter={filter}
+    const todoListsRender = todoLists.map((td) => {
+    let taskForRender = getTaskForRender();
+        return (<Todolist
+                key={td.id}
+                id={td.id}
+                title={td.title}
+                tasks={taskForRender}
+                removeTask={removeTask}
+                changeFilter={changeFilter}
+                addTasks={addTasks}
+                changeStatus={changeStatus}
+                filter={td.filter}
             />
         )
     });
