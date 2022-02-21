@@ -52,7 +52,7 @@ function App() {
         // const copyTasks = {...tasks};
         // copyTasks[todoListId] = filteredTask;
         // setTasks(copyTasks);
-        setTasks({...tasks, [todoListId]:tasks[todoListId].filter(t => t.id !== id)})
+        setTasks({...tasks, [todoListId]: tasks[todoListId].filter(t => t.id !== id)})
     }
 
     // let [filter, setFilter] = useState<FilterValuesType>("all");
@@ -66,25 +66,24 @@ function App() {
         setTasks(copyTasks)
 
 
-        setTasks({...tasks, [todoListId]:tasks[todoListId]})
+        setTasks({...tasks, [todoListId]: tasks[todoListId]})
     }
 
     function changeStatus(taskId: string, isDone: boolean, todoListId: string) {
         let task = tasks[todoListId].find((t) => {
             return t.id === taskId
         })
-
         if (task) {
             task.isDone = isDone
-            setTasks({...tasks, [todoListId]: [...tasks[todoListId].task] })
+            setTasks({...tasks, [todoListId]: [...tasks[todoListId]]})
         }
-       // setTasks({...tasks, [todoListId]: tasks[todoListId].map((t)=>t.id === taskId ? {...t, isDone}:t)}) если мапить
+        // setTasks({...tasks, [todoListId]: tasks[todoListId].map((t)=>t.id === taskId ? {...t, isDone}:t)}) если мапить
     }
-
 
     function changeFilter(value: FilterValuesType, todoListId: string) {
         setTodoLists(todoLists.map(tl => tl.id === todoListId ? {...tl, filter: value} : tl));
     }
+
 
     let taskForTodolist = tasks;
     if (filter === "completed") {
@@ -99,19 +98,22 @@ function App() {
     }
 
 
-
+    const todoListsRender = todoLists.map((ls) => {
+        return (<Todolist title="Wat to learn"
+                          tasks={taskForTodolist}
+                          removeTask={removeTask}
+                          changeFilter={changeFilter}
+                          addTasks={addTasks}
+                          changeStatus={changeStatus}
+                          filter={filter}
+            />
+        )
+    });
 
 
     return (
         <div className="App">
-            <Todolist title="Wat to learn"
-                      tasks={taskForTodolist}
-                      removeTask={removeTask}
-                      changeFilter={changeFilter}
-                      addTasks={addTasks}
-                      changeStatus={changeStatus}
-                      filter={filter}
-            />
+            <todoListsRender/>
         </div>
     );
 }
