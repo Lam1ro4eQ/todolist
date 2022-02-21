@@ -85,25 +85,22 @@ function App() {
     }
 
     const getTaskForRender = (todoLists: TodoListType) => {
-        let taskForTodolist = tasks;
         if (todoLists.filter === "completed") {
                 return tasks[todoLists.id].filter((td) => td.isDone === true)
-        }
-        if (todoLists.filter === "active") {
-            return tasks[todoLists.id].filter((t) => {
-                return t.isDone === false
+        }else if (todoLists.filter === "active") {
+            return tasks[todoLists.id].filter((td) => {
+                return td.isDone === false
             })
-        }
-        if (todoLists.filter === "all") {
-            return tasks[todoLists.id].filter((t) => {
-                return t.isDone
+        } else {
+            return tasks[todoLists.id].filter((td) => {
+                return td.isDone
             })
         }
     }
 
 
     const todoListsRender = todoLists.map((td) => {
-    let taskForRender = getTaskForRender();
+    let taskForRender = getTaskForRender(td);
         return (<Todolist
                 key={td.id}
                 id={td.id}
@@ -121,7 +118,7 @@ function App() {
 
     return (
         <div className="App">
-            <todoListsRender/>
+            {todoListsRender}
         </div>
     );
 }
