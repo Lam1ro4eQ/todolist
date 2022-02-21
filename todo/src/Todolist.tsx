@@ -30,26 +30,26 @@ export function Todolist(props: PropsType) {
     }
     const onPresKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            props.addTasks(newTaskTitle);
+            props.addTasks(newTaskTitle, props.id);
             setNewTaskTitle("");
         }
     }
     const addTask = () => {
         if (newTaskTitle.trim() !== "") {
-            props.addTasks(newTaskTitle.trim());
+            props.addTasks(newTaskTitle.trim(), props.id);
             setNewTaskTitle("");
         } else {
             setError("Title is required")
         }
     }
     const onAllClickHandler = () => {
-        props.changeFilter('all')
+        props.changeFilter('all', props.id)
     }
     const onActiveClickHandler = () => {
-        props.changeFilter('active')
+        props.changeFilter('active', props.id)
     }
     const onCompletedClickHandler = () => {
-        props.changeFilter('completed')
+        props.changeFilter('completed', props.id)
     }
 
 
@@ -70,10 +70,10 @@ export function Todolist(props: PropsType) {
                     {
                         props.tasks.map((t) => {
                             const onRemoveHandler = () => {
-                                props.removeTask(t.id)
+                                props.removeTask(t.id, props.id)
                             }
                             const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                props.changeStatus(t.id, e.currentTarget.checked)
+                                props.changeStatus(t.id, e.currentTarget.checked, props.id)
                             }
 
                             return <li key={t.id}><input type="checkbox" checked={t.isDone} onChange={onChangeHandler} className={t.isDone ? "is-done" : ""}/>
