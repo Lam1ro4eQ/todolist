@@ -92,14 +92,6 @@ function App() {
         } else {
             return tasks[todoLists.id]
         }
-    }const getTaskForRender = (todoLists: TodoListType) => {
-        if (todoLists.filter === "completed") {
-            return tasks[todoLists.id].filter((td) => td.isDone)
-        } else if (todoLists.filter === "active") {
-            return tasks[todoLists.id].filter((td) =>  !td.isDone )
-        } else {
-            return tasks[todoLists.id]
-        }
     }
 
 
