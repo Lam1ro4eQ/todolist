@@ -69,6 +69,18 @@ function App() {
         setTasks({...tasks, [todoListId]: tasks[todoListId]})
     }
 
+    function addTasks2(newTaskTitle: string, todoListId: string) {
+        const newTask = {id: v1(), title: newTaskTitle, isDone: false}
+        const taskFromTodoList = tasks[todoListId]
+        const updatedTask = [newTask, ...taskFromTodoList]
+        const copyTasks = {...tasks};
+        copyTasks[todoListId] = updatedTask
+        setTasks(copyTasks)
+
+
+        setTasks({...tasks, [todoListId]: tasks[todoListId]})
+    }
+
     function changeStatus(taskId: string, isDone: boolean, todoListId: string) {
         let task = tasks[todoListId].find((t) => {
             return t.id === taskId
