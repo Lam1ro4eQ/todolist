@@ -4,10 +4,8 @@ type CheckBoxType = {
 
 }
 
-export const CheckBox(CheckBoxType) => {
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        props.changeStatus(t.id, e.currentTarget.checked, props.id)
-    }
+export const CheckBox(props:CheckBoxType) => {
+
 
     <input type="checkbox" checked={t.isDone} onChange={onChangeHandler} className={t.isDone ? "is-done" : ""}/>
 }
