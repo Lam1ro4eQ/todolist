@@ -4,12 +4,13 @@ import {Simulate} from "react-dom/test-utils";
 
 
 type PropsType = {
+    todolistID: string
     title: string
     tasks: Array<TaskType>
-    removeTasks: (id: string) => void
-    changeFilter: (value: FilterValuesType) => void
-    addTasks: (newTaskTitle: string) => void
-    changeStatus: (taskId: string, isDone: boolean) => void
+    removeTasks: (todolistID:string, id: string) => void
+    changeFilter: (todolistID:string, value: FilterValuesType) => void
+    addTasks: (todolistID:string, newTaskTitle: string) => void
+    changeStatus: (todolistID: string, taskId: string, isDone: boolean) => void
     filter: FilterValuesType
 }
 export type TaskType = {
@@ -26,7 +27,7 @@ export function Todolist(props: PropsType) {
             setError("Field is required")
             return;
         }
-        props.addTasks(title.trim());
+        props.addTasks(props.todolistID, title.trim());
         setTitle(""); // очищаем поле ввода
 
     };
@@ -39,13 +40,13 @@ export function Todolist(props: PropsType) {
     }
 
     const setAllFilter = () => {
-        props.changeFilter("all")
+        props.changeFilter(props.todolistID,"all")
     }
     const setActiveFilter = () => {
-        props.changeFilter("active")
+        props.changeFilter(props.todolistID,"active")
     }
     const setCompletedFilter = () => {
-        props.changeFilter("completed")
+        props.changeFilter(props.todolistID,"completed")
     }
 
     return (
@@ -64,9 +65,9 @@ export function Todolist(props: PropsType) {
                     {
                         props.tasks.map((k) => {
                                 const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                    props.changeStatus(k.id, e.currentTarget.checked)
+                                    props.changeStatus(props.todolistID, k.id, e.currentTarget.checked)
                                 }
-                                const onRemoveHandler = () => {props.removeTasks(k.id)}
+                                const onRemoveHandler = () => {props.removeTasks(props.todolistID,k.id)}
                                 return <li key={k.id} className={k.isDone ? "is-done" : ""}>
                                     <input type="checkbox"
                                            checked={k.isDone}
