@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterValuesType} from "./App";
 import {Simulate} from "react-dom/test-utils";
+import {FullInput} from "./FullInput";
 
 
 type PropsType = {
@@ -20,24 +21,24 @@ export type TaskType = {
 }
 
 export function Todolist(props: PropsType) {
-    const [title, setTitle] = useState("");
-    const [error, setError] = useState<string | null>(null);  // set для ошибки
-    const addTask = () => {
-        if (title.trim() === "") {
-            setError("Field is required")
-            return;
-        }
-        props.addTasks(props.todolistID, title.trim());
-        setTitle(""); // очищаем поле ввода
-
-    };
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
-    const keyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
-        if (e.key === "Enter") {
-            addTask()
-        }
-    }
+    // const [title, setTitle] = useState("");
+    // const [error, setError] = useState<string | null>(null);  // set для ошибки
+    // const addTask = () => {
+    //     if (title.trim() === "") {
+    //         setError("Field is required")
+    //         return;
+    //     }
+    //     props.addTasks(props.todolistID, title.trim());
+    //     setTitle(""); // очищаем поле ввода
+    //
+    // };
+    // const changeTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
+    // const keyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+    //     setError(null);
+    //     if (e.key === "Enter") {
+    //         addTask()
+    //     }
+    // }
 
     const setAllFilter = () => {
         props.changeFilter(props.todolistID,"all")
@@ -49,18 +50,17 @@ export function Todolist(props: PropsType) {
         props.changeFilter(props.todolistID,"completed")
     }
 
+    const addTaskHandler = (newTaskTitle:string) => {
+        props.addTasks(props.todolistID, newTaskTitle)
+    }
+
     return (
         <div className="App">
             <div>
                 <h3>{props.title}</h3>
-                <div>
-                    <input value={title}
-                           onChange={changeTitle}
-                           onKeyPress={keyPressAddTask}
-                           className={error ? "error" : ""}/>
-                    <button onClick={addTask}>+</button>
-                    {error && <div className="error-message">{error}</div>}
-                </div>
+                    <FullInput
+                        callBack={addTaskHandler}
+                    />
                 <ul>
                     {
                         props.tasks.map((k) => {
