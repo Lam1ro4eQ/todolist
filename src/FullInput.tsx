@@ -1,4 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useRef, useState} from 'react';
+import {Button} from "@material-ui/core";
 
 type FullInputPropsType = {
     callBack: (newTitle: string) => void
@@ -23,6 +24,7 @@ export const FullInput = (props: FullInputPropsType) => {
     const addTask = () => {
         if(myRef.current) {
             props.callBack(myRef.current.value)
+            myRef.current.value = ''
         }
     };
 
@@ -41,7 +43,7 @@ export const FullInput = (props: FullInputPropsType) => {
             <input ref={myRef}
                    onKeyPress={keyPressAddTask}
                    className={error ? "error" : ""}/>
-            <button onClick={addTask}>+</button>
+            <Button onClick={addTask} variant={'contained'} color={'primary'}>+</Button>
             {error && <div className="error-message">{error}</div>}
         </div>
     );
