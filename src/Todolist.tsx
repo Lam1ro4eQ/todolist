@@ -2,6 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterValuesType} from "./App";
 import {Simulate} from "react-dom/test-utils";
 import {FullInput} from "./FullInput";
+import {Button, IconButton} from "@material-ui/core";
+import {Delete} from "@material-ui/icons";
 
 
 type PropsType = {
@@ -74,8 +76,9 @@ export function Todolist(props: PropsType) {
                                            onChange={onChangeHandler}
                                     />
                                     <span>{k.title}</span>
-                                    <button onClick={onRemoveHandler}>x
-                                    </button>
+                                    <IconButton onClick={onRemoveHandler}>
+                                        <Delete />
+                                    </IconButton>
                                 </li>
                             }
                         )
@@ -83,14 +86,17 @@ export function Todolist(props: PropsType) {
 
                 </ul>
                 <div>
-                    <button className={props.filter === "all" ? "active-filter" : ""} onClick={setAllFilter}>All
-                    </button>
-                    <button className={props.filter === "active" ? "active-filter" : ""}
+                    <Button variant={props.filter === "all" ? "contained" : "text"}
+                            onClick={setAllFilter}>All
+                    </Button>
+                    <Button variant={props.filter === "active" ? "contained" : "text"}
+                            color={"primary"}
                             onClick={setActiveFilter}>Active
-                    </button>
-                    <button className={props.filter === "completed" ? "active-filter" : ""}
+                    </Button>
+                    <Button variant={props.filter === "completed" ? "contained" : "text"}
+                            color={"secondary"}
                             onClick={setCompletedFilter}>Completed
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
