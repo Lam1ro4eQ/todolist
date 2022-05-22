@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
+import {Container, Grid, Paper} from "@material-ui/core";
 
 export type FilterValuesType = "all" | "completed" | "active"
 export type todolistsType = {
@@ -67,7 +68,13 @@ function App() {
     }
 
     const changeStatus = (todolistID: string, taskId: string, isDone: boolean) => {
-        setTasks({...tasks,[todolistID]:tasks[todolistID].map(filtered => filtered.id === taskId ? {...filtered,isDone:isDone} : filtered)})
+        setTasks({
+            ...tasks,
+            [todolistID]: tasks[todolistID].map(filtered => filtered.id === taskId ? {
+                ...filtered,
+                isDone: isDone
+            } : filtered)
+        })
         // let task = tasks.find(t => t.id === taskId)
         // if (task) {
         //     task.isDone = isDone
@@ -78,31 +85,37 @@ function App() {
 
     return (
         <div className="App">
-            {todolists.map((mapForTodolists) => {
-                let tasksForTodoList = tasks[mapForTodolists.id]
+            <Container fixed>
+                <Grid container spacing={6} style={{padding:'20px'}}>
+                    {todolists.map((mapForTodolists) => {
+                        let tasksForTodoList = tasks[mapForTodolists.id]
 
-                if (mapForTodolists.filter === "completed") {
-                    tasksForTodoList = tasks[mapForTodolists.id].filter(k => k.isDone == true)
-                }
-                if (mapForTodolists.filter === "active") {
-                    tasksForTodoList = tasks[mapForTodolists.id].filter(k => k.isDone == false)
-                }
+                        if (mapForTodolists.filter === "completed") {
+                            tasksForTodoList = tasks[mapForTodolists.id].filter(k => k.isDone == true)
+                        }
+                        if (mapForTodolists.filter === "active") {
+                            tasksForTodoList = tasks[mapForTodolists.id].filter(k => k.isDone == false)
+                        }
 
-                return (
-                    <Todolist
-                        todolistID={mapForTodolists.id}
-                        key={mapForTodolists.id}
-                        title={mapForTodolists.title}
-                        tasks={tasksForTodoList}
-                        removeTasks={removeTasks}
-                        changeFilter={changeFilter}
-                        addTasks={addTasks}
-                        changeStatus={changeStatus}
-                        filter={mapForTodolists.filter}
-                    />
-                )
-            })}
+                        return (<Grid item>
+                            <Paper style={{padding: "10px"}}>
+                                <Todolist
+                                    todolistID={mapForTodolists.id}
+                                    key={mapForTodolists.id}
+                                    title={mapForTodolists.title}
+                                    tasks={tasksForTodoList}
+                                    removeTasks={removeTasks}
+                                    changeFilter={changeFilter}
+                                    addTasks={addTasks}
+                                    changeStatus={changeStatus}
+                                    filter={mapForTodolists.filter}
+                                />
+                            </Paper>
+                        </Grid>)
 
+                    })}
+                </Grid>
+            </Container>
         </div>
     );
 }
