@@ -18,7 +18,7 @@ export const FullInput = (props: FullInputPropsType) => {
     const keyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
         if (e.key === "Enter") {
-            addTask();
+            addTaskFullInput();
         }
     }
 
@@ -34,7 +34,7 @@ export const FullInput = (props: FullInputPropsType) => {
     //     }
     // };
 
-    const addTask = () => {
+    const addTaskFullInput = () => {
         const newTitle = title.trim()
         if (newTitle.trim() !== "") {
             props.callBack(newTitle);
@@ -60,7 +60,7 @@ export const FullInput = (props: FullInputPropsType) => {
             {/*    onKeyPress={keyPressAddTask}*/}
             {/*    value={changeTitle}*/}
             {/*    />*/}
-            <IconButton onClick={addTask} color={'primary'}>
+            <IconButton onClick={addTaskFullInput} color={'primary'}>
                 <ControlPoint/>
             </IconButton>
             {error && <div className="error-message">{error}</div>}
