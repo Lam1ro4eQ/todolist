@@ -14,7 +14,7 @@ export const FullInput = (props: FullInputPropsType) => {
     const [error, setError] = useState<string | null>(null);  // set для ошибки
 
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
-    console.log(title)
+
     const keyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
         if (e.key === "Enter") {

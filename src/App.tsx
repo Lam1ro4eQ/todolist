@@ -90,6 +90,10 @@ function App() {
         setTasks({...tasks,[newId]:[]})
     }
 
+    const editTotolistTitle = () => {
+
+    }
+
     return (
         <div className="App">
             <Container fixed>
@@ -120,6 +124,7 @@ function App() {
                                     addTasks={addTasks}
                                     changeStatus={changeStatus}
                                     filter={mapForTodolists.filter}
+                                    editTotolistTitle={editTotolistTitle}
                                 />
                             </Paper>
                         </Grid>)
