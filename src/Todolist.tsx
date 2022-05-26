@@ -16,7 +16,8 @@ type PropsType = {
     addTasks: (todolistID: string, newTaskTitle: string) => void
     changeStatus: (todolistID: string, taskId: string, isDone: boolean) => void
     filter: FilterValuesType
-    editTotolistTitle: () => void
+    editTotolistTitle: (todolistID: string, newTitle: string) => void
+    editTask: (todolistID: string, taskId: string, newTitle:string) => void
 }
 export type TaskType = {
     id: string
@@ -53,18 +54,22 @@ export function Todolist(props: PropsType) {
     const setCompletedFilter = () => {
         props.changeFilter(props.todolistID, "completed")
     }
-
     const addTaskHandler = (newTaskTitle: string) => {
         props.addTasks(props.todolistID, newTaskTitle)
     }
-
+    const editTotolistTitleHandler = (newTitle: string) => {
+        props.editTotolistTitle(props.todolistID, newTitle)
+    }
+    const editTaskHandler = (kID: string, newTitle: string) => {
+        props.editTask(props.todolistID, kID, newTitle)
+    }
 
     return (
         <div className="App">
             <div>
                 <h3>
                     <EditableSpan
-                        callBack={props.editTotolistTitle}
+                        callBack={editTotolistTitleHandler}
                         title={props.title}/>
                 </h3>
                 <FullInput
@@ -84,7 +89,9 @@ export function Todolist(props: PropsType) {
                                            checked={k.isDone}
                                            onChange={onChangeHandler}
                                     />
-                                    <span>{k.title}</span>
+                                    <EditableSpan
+                                        callBack={(newTitle) => editTaskHandler(k.id, newTitle)}
+                                        title={k.title}/>
                                     <IconButton onClick={onRemoveHandler}>
                                         <Delete/>
                                     </IconButton>

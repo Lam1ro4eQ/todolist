@@ -83,25 +83,29 @@ function App() {
         // setTasks([...tasks])
     }
 
-    const addtodoList = (titleTodo: string ) => {
+    const addtodoList = (titleTodo: string) => {
         let newId = v1();
-        const newTodoList:todolistsType = {id: newId, title: titleTodo, filter: 'all'}
-        setTodolists([...todolists,newTodoList])
-        setTasks({...tasks,[newId]:[]})
+        const newTodoList: todolistsType = {id: newId, title: titleTodo, filter: 'all'}
+        setTodolists([...todolists, newTodoList])
+        setTasks({...tasks, [newId]: []})
     }
 
-    const editTotolistTitle = () => {
+    const editTotolistTitle = (todolistID: string, newTitle: string) => {
+        setTodolists(todolists.map(el => el.id === todolistID ? {...el, title: newTitle} : el))
+    }
 
+    const editTask = (todolistID: string, taskId: string, newTitle:string) => {
+        setTasks({...tasks,[todolistID]:tasks[todolistID].map(el => el.id === taskId ? {...el,title:newTitle} : el)})
     }
 
     return (
         <div className="App">
             <Container fixed>
-                <Grid container spacing={6} style={{padding:'20px', margin:'50px'}}>
-                <FullInput callBack={addtodoList}
-                />
+                <Grid container spacing={6} style={{padding: '20px', margin: '50px'}}>
+                    <FullInput callBack={addtodoList}
+                    />
                 </Grid>
-                <Grid container spacing={6} style={{padding:'20px'}}>
+                <Grid container spacing={6} style={{padding: '20px'}}>
                     {todolists.map((mapForTodolists) => {
                         let tasksForTodoList = tasks[mapForTodolists.id]
 
@@ -125,6 +129,7 @@ function App() {
                                     changeStatus={changeStatus}
                                     filter={mapForTodolists.filter}
                                     editTotolistTitle={editTotolistTitle}
+                                    editTask={editTask}
                                 />
                             </Paper>
                         </Grid>)
