@@ -102,7 +102,7 @@ export function Todolist(props: PropsType) {
 
                 </ul>
                 <div>
-                    <Button variant={props.filter === "all" ? "contained" : "text"}
+                    <Button variant={props.filter === "all" ? "outlined" : "text"}
                             onClick={setAllFilter}>All
                     </Button>
                     <Button variant={props.filter === "active" ? "contained" : "text"}
