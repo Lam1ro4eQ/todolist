@@ -18,6 +18,7 @@ type PropsType = {
     filter: FilterValuesType
     editTotolistTitle: (todolistID: string, newTitle: string) => void
     editTask: (todolistID: string, taskId: string, newTitle:string) => void
+    deleteTotolistTitle: (todolistID: string) => void
 }
 export type TaskType = {
     id: string
@@ -63,6 +64,9 @@ export function Todolist(props: PropsType) {
     const editTaskHandler = (kID: string, newTitle: string) => {
         props.editTask(props.todolistID, kID, newTitle)
     }
+    const deleteTotolistTitleHandler = () => {
+        props.deleteTotolistTitle(props.todolistID)
+    }
 
     return (
         <div className="App">
@@ -71,6 +75,9 @@ export function Todolist(props: PropsType) {
                     <EditableSpan
                         callBack={editTotolistTitleHandler}
                         title={props.title}/>
+                    <IconButton onClick={deleteTotolistTitleHandler}>
+                        <Delete/>
+                    </IconButton>
                 </h3>
                 <FullInput
                     callBack={addTaskHandler}

@@ -93,6 +93,9 @@ function App() {
     const editTotolistTitle = (todolistID: string, newTitle: string) => {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, title: newTitle} : el))
     }
+    const deleteTotolistTitle = (todolistID: string) => {
+        setTodolists(todolists.filter(el => el.id != todolistID))
+    }
 
     const editTask = (todolistID: string, taskId: string, newTitle:string) => {
         setTasks({...tasks,[todolistID]:tasks[todolistID].map(el => el.id === taskId ? {...el,title:newTitle} : el)})
@@ -130,6 +133,7 @@ function App() {
                                     filter={mapForTodolists.filter}
                                     editTotolistTitle={editTotolistTitle}
                                     editTask={editTask}
+                                    deleteTotolistTitle={deleteTotolistTitle}
                                 />
                             </Paper>
                         </Grid>)
