@@ -4,6 +4,7 @@ import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {Container, Grid, Paper} from "@material-ui/core";
 import {FullInput} from "./FullInput";
+import ButtonAppBar from "./components/ButtonAppBar";
 
 export type FilterValuesType = "all" | "completed" | "active"
 export type todolistsType = {
@@ -103,6 +104,7 @@ function App() {
 
     return (
         <div className="App">
+            <ButtonAppBar/>
             <Container fixed>
                 <Grid container spacing={6} style={{padding: '20px', margin: '50px'}}>
                     <FullInput callBack={addtodoList}
