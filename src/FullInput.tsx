@@ -48,7 +48,7 @@ export const FullInput = (props: FullInputPropsType) => {
         <div>
             <TextField
                 variant={'outlined'}
-                label={'Type value'}
+                label={error}
                 onKeyPress={keyPressAddTask}
                 value={title}
                 onChange={changeTitle}
@@ -63,7 +63,7 @@ export const FullInput = (props: FullInputPropsType) => {
             <IconButton onClick={addTaskFullInput} color={'primary'}>
                 <ControlPoint/>
             </IconButton>
-            {error && <div className="error-message">{error}</div>}
+            {/*{error && <div className="error-message">{error}</div>}*/}
         </div>
     );
 };
