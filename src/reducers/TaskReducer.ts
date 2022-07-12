@@ -18,7 +18,6 @@ const addtodoListAC = () => {
     return {
         type: "ADD_TODOLIST",
         payload: {
-
         }
     } as const
 }
