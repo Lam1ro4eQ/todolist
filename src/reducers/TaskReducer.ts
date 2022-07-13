@@ -1,23 +1,25 @@
-import {TaskType} from "../Todolist";
+import {TasksType} from "../Todolist";
 
-export const TaskReducer = (state: Array<TaskType>, action: tsarACType) => {
+export const TaskReducer = (state: TasksType, action: tsarACType): TasksType => {
     switch (action.type) {
-        case 'ADD_TODOLIST': {
-            return state
+        case 'ADD_TASKSLIST': {
+
+            return {...state, [action.payload.newTodoListID]: []}
         }
         default:
             return state
     }
 }
 
-type tsarACType = addtodoListACType
+type tsarACType = addTasksListACType
 
-type addtodoListACType = ReturnType<typeof addtodoListAC>
+type addTasksListACType = ReturnType<typeof addTasksListAC>
 
-const addtodoListAC = () => {
+export const addTasksListAC = (newTodoListID: string) => {
     return {
-        type: "ADD_TODOLIST",
+        type: "ADD_TASKSLIST",
         payload: {
+            newTodoListID: newTodoListID
         }
     } as const
 }
