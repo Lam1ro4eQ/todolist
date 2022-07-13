@@ -5,11 +5,11 @@ import {v1} from "uuid";
 import {Container, Grid, Paper} from "@material-ui/core";
 import {FullInput} from "./FullInput";
 import ButtonAppBar from "./components/ButtonAppBar";
-import {addTasksListAC, TaskReducer} from "./reducers/TaskReducer";
+import {addTasksListAC, removeTasksAC, TaskReducer} from "./reducers/TaskReducer";
 import {addTodoListAC, TodoListReducer} from "./reducers/TodoListReducer";
 
 export type FilterValuesType = "all" | "completed" | "active"
-export type todolistsType = {
+export type TodolistsType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -67,6 +67,7 @@ function App() {
 
 
     function removeTasks(todolistID: string, id: string) {
+        dispatchTasks(removeTasksAC(todolistID, id))
         // setTasks({...tasks, [todolistID]: tasks[todolistID].filter(filtered => filtered.id != id)});
     }
 
@@ -119,7 +120,7 @@ function App() {
                     />
                 </Grid>
                 <Grid container spacing={6} style={{padding: '20px'}}>
-                    {todolists.map((mapForTodolists:todolistsType) => {
+                    {todolists.map((mapForTodolists) => {
                         let tasksForTodoList = tasks[mapForTodolists.id]
 
                         if (mapForTodolists.filter === "completed") {
