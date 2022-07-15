@@ -17,12 +17,20 @@ export const TodoListReducer = (state: Array<TodolistsType>, action: TsarACType)
             return state.map(el => el.id === action.payload.ChangeTodolistID ? {...el, filter: action.payload.value} : el)
         }
 
+        case 'EDIT_TODOLIST_ITEM': {
+            return  state.map(el => el.id === action.payload.todolistID ? {...el, title: action.payload.newTitle} : el)
+        }
+
+        case 'DELETE_TODO_TITLE': {
+            return state.filter(f => f.id != action.payload.todolistID)
+        }
+
         default:
             return state
     }
 }
 
-type TsarACType = AddTodoListACType | ChangeFilterACType
+type TsarACType = AddTodoListACType | ChangeFilterACType | EditTotolistTitleACType | DeleteTotolistTitleACType
 
 type AddTodoListACType = ReturnType<typeof addTodoListAC>
 export const addTodoListAC = (titleTodo: string, newTodoListID: string) => {
@@ -42,6 +50,26 @@ export const changeFilterAC = (ChangeTodolistID: string, value: FilterValuesType
         payload: {
             ChangeTodolistID: ChangeTodolistID,
             value: value
+        }
+    } as const
+}
+
+type EditTotolistTitleACType = ReturnType<typeof editTotolistTitleAC>
+export const editTotolistTitleAC = (todolistID: string, newTitle: string) => {
+    return {
+        type: "EDIT_TODOLIST_ITEM",
+        payload: {
+            todolistID, newTitle
+        }
+    } as const
+}
+
+type DeleteTotolistTitleACType = ReturnType<typeof deleteTotolistTitleAC>
+export const deleteTotolistTitleAC = (todolistID: string) => {
+    return {
+        type: "DELETE_TODO_TITLE",
+        payload: {
+            todolistID
         }
     } as const
 }

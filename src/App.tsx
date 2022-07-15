@@ -5,8 +5,21 @@ import {v1} from "uuid";
 import {Container, Grid, Paper} from "@material-ui/core";
 import {FullInput} from "./FullInput";
 import ButtonAppBar from "./components/ButtonAppBar";
-import {addTasksAC, addTasksListAC, changeStatusAC, removeTasksAC, TaskReducer} from "./reducers/TaskReducer";
-import {addTodoListAC, changeFilterAC, TodoListReducer} from "./reducers/TodoListReducer";
+import {
+    addTasksAC,
+    addTasksListAC,
+    changeStatusAC,
+    editTaskAC,
+    removeTasksAC,
+    TaskReducer
+} from "./reducers/TaskReducer";
+import {
+    addTodoListAC,
+    changeFilterAC,
+    deleteTotolistTitleAC,
+    editTotolistTitleAC,
+    TodoListReducer
+} from "./reducers/TodoListReducer";
 
 export type FilterValuesType = "all" | "completed" | "active"
 export type TodolistsType = {
@@ -104,13 +117,16 @@ function App() {
     }
 
     const editTotolistTitle = (todolistID: string, newTitle: string) => {
+        dispatchTodolists(editTotolistTitleAC(todolistID,newTitle))
         // setTodolists(todolists.map(el => el.id === todolistID ? {...el, title: newTitle} : el))
     }
     const deleteTotolistTitle = (todolistID: string) => {
+        dispatchTodolists(deleteTotolistTitleAC(todolistID))
         // setTodolists(todolists.filter(el => el.id != todolistID))
     }
 
     const editTask = (todolistID: string, taskId: string, newTitle: string) => {
+        dispatchTasks(editTaskAC(todolistID,taskId,newTitle))
         // setTasks({...tasks,[todolistID]:tasks[todolistID].map(el => el.id === taskId ? {...el,title:newTitle} : el)})
     }
 

@@ -9,7 +9,6 @@ export const TaskReducer = (state: TasksType, action: tsarACType): TasksType => 
         }
 
         case "REMOVE_TASKS": {
-            // setTasks({...tasks, [todolistID]: tasks[todolistID].filter(filtered => filtered.id != id)});
             return {
                 ...state,
                 [action.payload.todolistID]: state[action.payload.todolistID].filter(filtered => filtered.id != action.payload.id)
@@ -18,19 +17,25 @@ export const TaskReducer = (state: TasksType, action: tsarACType): TasksType => 
 
         case "ADD_TASK": {
             let newTitle = {id: v1(), title: action.payload.newTaskTitle, isDone: false};
-            // setTasks({...tasks, [todolistID]: [newTitle, ...tasks[todolistID]]})
             return {...state, [action.payload.todolistID]: [newTitle, ...state[action.payload.todolistID]]}
         }
 
         case "CHANGE_STATUS": {
-
             return {
                 ...state,
                 [action.payload.todolistID]: state[action.payload.todolistID].map(el => el.id === action.payload.taskId ? {
                     ...el, isDone: action.payload.isDone
                 } : el)
             }
+        }
 
+        case "EDIT_TASK": {
+            return {...state,
+                [action.payload.todolistID]: state[action.payload.todolistID].map(el => el.id === action.payload.taskId ? {
+                    ...el,
+                    title: action.payload.newTitle
+                } : el)
+            }
         }
 
         default:
@@ -38,7 +43,7 @@ export const TaskReducer = (state: TasksType, action: tsarACType): TasksType => 
     }
 }
 
-type tsarACType = addTasksListACType | removeTasksACType | AddTasksACType | ChangeStatusACType
+type tsarACType = addTasksListACType | removeTasksACType | AddTasksACType | ChangeStatusACType | EditTaskACType
 
 type addTasksListACType = ReturnType<typeof addTasksListAC>
 export const addTasksListAC = (newTodoListID: string) => {
@@ -77,6 +82,16 @@ export const changeStatusAC = (todolistID: string, taskId: string, isDone: boole
         type: 'CHANGE_STATUS',
         payload: {
             todolistID, taskId, isDone
+        }
+    } as const
+}
+
+type EditTaskACType = ReturnType<typeof editTaskAC>
+export const editTaskAC = (todolistID: string, taskId: string, newTitle: string) => {
+    return {
+        type: "EDIT_TASK",
+        payload: {
+            todolistID, taskId, newTitle
         }
     } as const
 }
