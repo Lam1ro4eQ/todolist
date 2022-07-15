@@ -5,7 +5,7 @@ import {v1} from "uuid";
 import {Container, Grid, Paper} from "@material-ui/core";
 import {FullInput} from "./FullInput";
 import ButtonAppBar from "./components/ButtonAppBar";
-import {addTasksAC, addTasksListAC, removeTasksAC, TaskReducer} from "./reducers/TaskReducer";
+import {addTasksAC, addTasksListAC, changeStatusAC, removeTasksAC, TaskReducer} from "./reducers/TaskReducer";
 import {addTodoListAC, changeFilterAC, TodoListReducer} from "./reducers/TodoListReducer";
 
 export type FilterValuesType = "all" | "completed" | "active"
@@ -83,6 +83,7 @@ function App() {
     }
 
     const changeStatus = (todolistID: string, taskId: string, isDone: boolean) => {
+        dispatchTasks(changeStatusAC(todolistID,taskId,isDone))
         // setTasks({
         //     ...tasks,
         //     [todolistID]: tasks[todolistID].map(filtered => filtered.id === taskId ? {
