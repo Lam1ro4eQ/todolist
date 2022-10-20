@@ -30,13 +30,6 @@ export type TodolistsType = {
 
 function App() {
 
-    // let [tasks, setTasks] = useState<Array<TaskType>>([
-    //     {id: v1(), title: "HTML&CSS", isDone: true},
-    //     {id: v1(), title: "JS", isDone: true},
-    //     {id: v1(), title: "React", isDone: false}
-    // ])
-    // let [filter, setFilter] = useState<FilterValuesType>("all")
-
     let todolistID1 = v1();
     let todolistID2 = v1();
 
