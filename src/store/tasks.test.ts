@@ -53,5 +53,25 @@ test("case SUM of salaryReduser", () => {
     }
     const result = salaryReduser(salary,action)
     expect(result).toBe(1000)
-    expect( salaryReduser(salary,testAction)).toBe(1000)
+    expect( salaryReduser(salary,testAction)).toBe(600)
+})
+
+test("case DIV of salaryReduser", () => {
+    const salary: StateType = 800
+    const action: ActionType = {
+        type: "DIV",
+        n: 2
+    }
+    const result = salaryReduser(salary,action)
+    expect(result).toBe(400)
+})
+
+test("case MULT of salaryReduser", () => {
+    const salary: StateType = 800
+    const action: ActionType = {
+        type: "MULT",
+        n: 2
+    }
+    const result = salaryReduser(salary,action)
+    expect(result).toBe(1600)
 })
