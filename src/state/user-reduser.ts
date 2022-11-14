@@ -15,8 +15,7 @@ export const userReduser = (state: Statetype, action: Actiontype) => {
             state.age = state.age + 1;
             return state;
         case "INCREMENT-CHILDREN-COUNT":
-           // state.childrenCount = state.childrenCount + 1;
-            return {...state, childrenCount: state.childrenCount + 1};
+           return {...state, childrenCount: state.childrenCount + 1}
         case "CHANGE-NAME":
             return {...state, name: action.newName}
         default:
