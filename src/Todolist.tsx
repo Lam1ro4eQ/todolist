@@ -5,6 +5,7 @@ import {FullInput} from "./FullInput";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import EditableSpan from "./EditableSpan";
+import InputMap from "./components/CheckBox";
 
 
 type PropsType = {
@@ -95,6 +96,7 @@ export function Todolist(props: PropsType) {
                                     props.removeTasks(props.todolistID, k.id)
                                 }
                                 return <li key={k.id} className={k.isDone ? "is-done" : ""}>
+                                    {/*<CheckBox checked={}*/}
                                     <input type="checkbox"
                                            checked={k.isDone}
                                            onChange={onChangeHandler}
