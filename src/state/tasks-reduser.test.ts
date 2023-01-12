@@ -1,7 +1,7 @@
 import {addTaskAC, changeEditTitleAC, changeTaskStatusAC, tasksReducer} from './tasks-reduser'
 import { TasksType } from '../Todolist'
 import {removeTaskAC} from "./tasks-reduser";
-import {addTodolistAC} from "./toodolists-reduser";
+import {addTodolistAC, removeTodolistAC} from "./toodolists-reduser";
 import {v1} from "uuid";
 
 test('correct task should be deleted from correct array', () => {
@@ -147,7 +147,7 @@ test('property with todolistId should be deleted', () => {
         ]
     }
 
-    const action = RemoveTodolistAC('todolistId2')
+    const action = removeTodolistAC('todolistId2')
 
     const endState = tasksReducer(startState, action)
 
