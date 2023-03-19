@@ -2,14 +2,22 @@ import {v1} from "uuid";
 import {FilterValuesType, TodolistsType} from "../App";
 import {addTodolistAC, changeTodolistFilterAC, removeTodolistAC, todolistReducer} from "./toodolists-reduser";
 
-test('correct todolist should be removed', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
+let todolistId1:string
+let todolistId2:string
+let startState: Array<TodolistsType> // задали переменные и в beforeEach дали значения
+
+beforeEach(()=>{
+    todolistId1 = v1();
+    todolistId2 = v1();
 
     const startState: Array<TodolistsType> = [
         {id: todolistId1, title: "What to learn", filter: "all"},
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
+}) // сама вызывается перед каждым тестом
+
+test('correct todolist should be removed', () => {
+
     // const endState = todolistReducer(startState,{type:"REMOVE-TODOLIST", id: todolistId1})
     const endState = todolistReducer(startState, removeTodolistAC(todolistId1))
 
@@ -18,13 +26,7 @@ test('correct todolist should be removed', () => {
 })
 
 test('correct todolist should be add', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
 
-    const startState: Array<TodolistsType> = [
-        {id: todolistId1, title: "What to learn", filter: "all"},
-        {id: todolistId2, title: "What to buy", filter: "all"}
-    ]
     const newIdTodolist = v1()
     let newTitle = "newTodolistTitle"
     // const endState = todolistReducer(startState,{type:"REMOVE-TODOLIST", id: todolistId1})
@@ -35,13 +37,7 @@ test('correct todolist should be add', () => {
 })
 
 test('correct todolist filter', () => {
-    let todolistId1 = v1();
-    let todolistId2 = v1();
 
-    const startState: Array<TodolistsType> = [
-        {id: todolistId1, title: "What to learn", filter: "all"},
-        {id: todolistId2, title: "What to buy", filter: "all"}
-    ]
     let newFilter:FilterValuesType = "active"
     // const endState = todolistReducer(startState,{type:"REMOVE-TODOLIST", id: todolistId1})
     const endState = todolistReducer(startState, changeTodolistFilterAC(todolistId1,newFilter))

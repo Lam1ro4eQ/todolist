@@ -24,7 +24,7 @@ export const todolistReducer = (state: Array<TodolistsType>, action: Actionstype
     }
 }
 
-type Actionstypes = RemoveTodolistACType | AddTodolistACType | ChangeTodolistFilterACType
+export type Actionstypes = RemoveTodolistACType | AddTodolistACType | ChangeTodolistFilterACType
 
 export type RemoveTodolistACType = ReturnType<typeof removeTodolistAC>
 export const removeTodolistAC = (todolistId1: string) => {
