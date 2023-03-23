@@ -1,7 +1,10 @@
 import {TasksType} from "../Todolist";
 import {v1} from "uuid";
 
-export const TaskReducer = (state: TasksType, action: tsarACType): TasksType => {
+const initialState: TasksType = {}
+
+
+export const TaskReducer = (state = initialState, action: tsarACType): TasksType => {
     switch (action.type) {
 
         case 'ADD_TASKSLIST': {
