@@ -6,20 +6,17 @@ import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import EditableSpan from "./EditableSpan";
 import InputMap from "./components/CheckBox";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./state/store";
+import {addTasksAC, changeStatusAC, editTaskAC, removeTasksAC} from "./reducers/TaskReducer";
+import {changeFilterAC, deleteTotolistTitleAC, editTotolistTitleAC} from "./reducers/TodoListReducer";
 
 
 type PropsType = {
     todolistID: string
     title: string
-    tasks: Array<TaskType>
-    removeTasks: (todolistID: string, id: string) => void
-    changeFilter: (todolistID: string, value: FilterValuesType) => void
-    addTasks: (todolistID: string, newTaskTitle: string) => void
-    changeStatus: (todolistID: string, taskId: string, isDone: boolean) => void
     filter: FilterValuesType
-    editTotolistTitle: (todolistID: string, newTitle: string) => void
-    editTask: (todolistID: string, taskId: string, newTitle: string) => void
-    deleteTotolistTitle: (todolistID: string) => void
+
 }
 export type TaskType = {
     id: string
@@ -30,28 +27,44 @@ export type TasksType = {
     [key: string]: Array<TaskType>
 }
 
-export function Todolist(props: PropsType) {
+export function TodolistWithRedux(props: PropsType) {
+
+    let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[props.todolistID])
+    const dispatch = useDispatch()
+
 
     const setAllFilter = () => {
-        props.changeFilter(props.todolistID, "all")
+        // props.changeFilter(props.todolistID, "all")
+        dispatch(changeFilterAC(props.todolistID, "all"))
     }
     const setActiveFilter = () => {
-        props.changeFilter(props.todolistID, "active")
+        // props.changeFilter(props.todolistID, "active")
+        dispatch(changeFilterAC(props.todolistID, "active"))
     }
     const setCompletedFilter = () => {
-        props.changeFilter(props.todolistID, "completed")
+        // props.changeFilter(props.todolistID, "completed")
+        dispatch(changeFilterAC(props.todolistID, "completed"))
     }
+
+    if (props.filter === "completed") {
+        tasks = tasks.filter((k: TaskType) => k.isDone == true)
+    }
+    if (props.filter === "active") {
+        tasks = tasks.filter((k: TaskType) => k.isDone == false)
+    }
+
     const addTaskHandler = (newTaskTitle: string) => {
-        props.addTasks(props.todolistID, newTaskTitle)
+        dispatch(addTasksAC(props.todolistID, newTaskTitle))
     }
     const editTotolistTitleHandler = (newTitle: string) => {
-        props.editTotolistTitle(props.todolistID, newTitle)
+        dispatch(editTotolistTitleAC(props.todolistID, newTitle))
     }
     const editTaskHandler = (kID: string, newTitle: string) => {
-        props.editTask(props.todolistID, kID, newTitle)
+        // props.editTask(props.todolistID, kID, newTitle)
+        dispatch(editTaskAC(props.todolistID, kID, newTitle))
     }
     const deleteTotolistTitleHandler = () => {
-        props.deleteTotolistTitle(props.todolistID)
+        dispatch(deleteTotolistTitleAC(props.todolistID))
     }
 
     return (
@@ -70,12 +83,12 @@ export function Todolist(props: PropsType) {
                 />
                 <ul>
                     {
-                        props.tasks.map((k) => {
+                        tasks.map((k) => {
                                 const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                    props.changeStatus(props.todolistID, k.id, e.currentTarget.checked)
+                                    dispatch(changeStatusAC(props.todolistID, k.id,e.currentTarget.checked))
                                 }
                                 const onRemoveHandler = () => {
-                                    props.removeTasks(props.todolistID, k.id)
+                                    dispatch(removeTasksAC(props.todolistID, k.id))
                                 }
                                 return <li key={k.id} className={k.isDone ? "is-done" : ""}>
                                     {/*<CheckBox checked={}*/}

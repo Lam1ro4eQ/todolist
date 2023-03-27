@@ -15,11 +15,14 @@ export const TodoListReducer = (state = initialState, action: TsarACType): Array
         }
 
         case 'CHANGE_FILTER': {
-            return state.map(el => el.id === action.payload.ChangeTodolistID ? {...el, filter: action.payload.value} : el)
+            return state.map(el => el.id === action.payload.ChangeTodolistID ? {
+                ...el,
+                filter: action.payload.value
+            } : el)
         }
 
         case 'EDIT_TODOLIST_ITEM': {
-            return  state.map(el => el.id === action.payload.todolistID ? {...el, title: action.payload.newTitle} : el)
+            return state.map(el => el.id === action.payload.todolistID ? {...el, title: action.payload.newTitle} : el)
         }
 
         case 'DELETE_TODO_TITLE': {
@@ -33,7 +36,7 @@ export const TodoListReducer = (state = initialState, action: TsarACType): Array
 
 type TsarACType = AddTodoListACType | ChangeFilterACType | EditTotolistTitleACType | DeleteTotolistTitleACType
 
-type AddTodoListACType = ReturnType<typeof addTodoListAC>
+export type AddTodoListACType = ReturnType<typeof addTodoListAC>
 export const addTodoListAC = (titleTodo: string, newTodoListID: string) => {
     return {
         type: "ADD_TODOLIST",
@@ -65,7 +68,7 @@ export const editTotolistTitleAC = (todolistID: string, newTitle: string) => {
     } as const
 }
 
-type DeleteTotolistTitleACType = ReturnType<typeof deleteTotolistTitleAC>
+export type DeleteTotolistTitleACType = ReturnType<typeof deleteTotolistTitleAC>
 export const deleteTotolistTitleAC = (todolistID: string) => {
     return {
         type: "DELETE_TODO_TITLE",

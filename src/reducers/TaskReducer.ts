@@ -1,5 +1,8 @@
 import {TasksType} from "../Todolist";
 import {v1} from "uuid";
+import {AddTodoListACType} from "./TodoListReducer";
+import {FilterValuesType} from "../App";
+
 
 const initialState: TasksType = {}
 
@@ -33,7 +36,8 @@ export const TaskReducer = (state = initialState, action: tsarACType): TasksType
         }
 
         case "EDIT_TASK": {
-            return {...state,
+            return {
+                ...state,
                 [action.payload.todolistID]: state[action.payload.todolistID].map(el => el.id === action.payload.taskId ? {
                     ...el,
                     title: action.payload.newTitle
@@ -41,12 +45,22 @@ export const TaskReducer = (state = initialState, action: tsarACType): TasksType
             }
         }
 
+        case 'ADD_TODOLIST': {
+            return {...state, [action.payload.newTodoListID]: []}
+        }
+
         default:
             return state
     }
 }
 
-type tsarACType = addTasksListACType | removeTasksACType | AddTasksACType | ChangeStatusACType | EditTaskACType
+type tsarACType =
+    addTasksListACType
+    | removeTasksACType
+    | AddTasksACType
+    | ChangeStatusACType
+    | EditTaskACType
+    | AddTodoListACType
 
 type addTasksListACType = ReturnType<typeof addTasksListAC>
 export const addTasksListAC = (newTodoListID: string) => {
